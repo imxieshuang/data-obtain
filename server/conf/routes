@@ -4,6 +4,7 @@
 
 # Home page
 GET        /                             com.simon.playbinding.controllers.Application.index
+GET        /wx/test                      com.simon.playbinding.controllers.WxController.test
 
 # Prefix must match `play.assets.urlPrefix`
 GET        /assets/*file                 controllers.Assets.at(file)

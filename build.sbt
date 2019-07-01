@@ -2,7 +2,7 @@ import sbtcrossproject.{crossProject, CrossType}
 
 lazy val scalaV = "2.12.4"
 lazy val jQueryV = "2.2.4"
-lazy val semanticV = "2.2.10"
+lazy val bootstrapV = "4.3.1"
 
 lazy val server = (project in file("server")).settings(commonSettings).settings(
   scalaVersion := scalaV,
@@ -15,10 +15,13 @@ lazy val server = (project in file("server")).settings(commonSettings).settings(
     "com.vmunier" %% "scalajs-scripts" % "1.1.2",
     guice,
     specs2 % Test,
-    // webjars for Semantic-UI
+    // webjars for bootstrap
      "org.webjars" %% "webjars-play" % "2.6.1",
-     "org.webjars" % "Semantic-UI" % semanticV,
+     "org.webjars" % "bootstrap" % bootstrapV,
      "org.webjars" % "jquery" % jQueryV,
+    ws,
+    ehcache,
+    "com.lihaoyi" %% "requests" % "0.1.7"
   ),
   // to have routing also in ScalaJS
   // Create a map of versioned assets, replacing the empty versioned.js
@@ -36,12 +39,13 @@ lazy val client = (project in file("client")).settings(commonSettings).settings(
   addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full),
   jsDependencies ++= Seq(
     "org.webjars" % "jquery" % jQueryV / "jquery.js" minified "jquery.min.js",
-    "org.webjars" % "Semantic-UI" % semanticV / "semantic.js" minified "semantic.min.js" dependsOn "jquery.js"
+    "org.webjars" % "bootstrap" % bootstrapV / "bootstrap.js" minified "bootstrap.min.js" dependsOn "jquery.js"
   ),
   libraryDependencies ++= Seq(
     "org.scala-js" %%% "scalajs-dom" % "0.9.5",
     "com.thoughtworks.binding" %%% "dom" % "latest.release",
-    "com.thoughtworks.binding" %% "futurebinding" % "latest.release"
+    "com.thoughtworks.binding" %% "futurebinding" % "latest.release",
+    "org.querki" %%% "jquery-facade" % "1.2",
   )
 ).enablePlugins(ScalaJSPlugin, ScalaJSWeb).
   dependsOn(sharedJs)
